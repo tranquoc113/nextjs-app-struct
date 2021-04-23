@@ -1,20 +1,27 @@
-import Head from "next/head";
-import '../../styles.scss'
+import '../../styles.scss';
+import '../assets/css/global.css';
 import Layout from '../component/layout';
+import {useState} from "react";
+import {Provider} from 'react-redux';
+import store from '../redux/store';
 
+const MyApp = ({Component, pageProps}) => {
+    const [title, setTitle] = useState('Null ');
 
-export default function MyApp({ Component, pageProps }) {
-    return(
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
-            // <div>
-            //     <Head>
-            //         <title>New project</title>
-            //         <link rel="icon" href="/favicon.ico" />
-            //         <link rel="stylesheet" href="/css/global.css"/>
-            //     </Head>
-            //     <Component {...pageProps} />
-            // </div>
+    return (
+        <Provider store={store}>
+            <Layout title={title}>
+                <Component {...pageProps} updateFormData={setTitle}/>
+            </Layout>
+        </Provider>
     )
 }
+
+
+MyApp.getInitialProps = async function ({Component, ctx}) {
+    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+
+    //Anything returned here can be accessed by the client
+    return {pageProps: pageProps};
+}
+export default MyApp;

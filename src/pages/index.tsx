@@ -1,7 +1,8 @@
 import Image from 'next/image'
-function HomePage() {
-  // let finname:string ='abc';
-  return <div>
+
+function HomePage({prop}) {
+
+    return <div>
       <main>
           <div className="demo">ok</div>
 
@@ -14,7 +15,7 @@ function HomePage() {
 
 
       </main>
-    
+
     Welcome to Next.js !</div>
 }
 
